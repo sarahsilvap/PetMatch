@@ -10,6 +10,9 @@
     "postinstall": "npm rebuild"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@headlessui/vue": "^1.7.23",
     "axios": "^1.8.4",
     "js-cookie": "^3.0.5",

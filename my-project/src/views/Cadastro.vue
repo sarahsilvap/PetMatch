@@ -173,7 +173,7 @@ export default {
 }
 
 .auth-title {
-  color: #2d74be;
+  color: #F2A413;
   text-align: center;
   margin-bottom: 25px;
   margin-top: 15px;
@@ -207,11 +207,11 @@ export default {
 
 .form-group input:focus {
   outline: none;
-  border-color: #2d74be;
+  border-color: #F2A413;
 }
 
 .auth-button {
-  background-color: #fb6d67;
+  background-color: #F2A413;
   color: white;
   border: none;
   padding: 12px;
@@ -224,7 +224,7 @@ export default {
 }
 
 .auth-button:hover {
-  background-color: #e05d57;
+  filter: brightness(1.1);
 }
 
 .auth-link {
@@ -234,7 +234,7 @@ export default {
 }
 
 .auth-link a {
-  color: #2d74be;
+  color: #F2A413;
   text-decoration: none;
   font-weight: 500;
 }

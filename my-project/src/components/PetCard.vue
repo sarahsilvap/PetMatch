@@ -120,7 +120,7 @@ const isExpanded = ref(false);
       </div>
 
       <button
-        class="mt-auto w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#2d74be] hover:bg-[#79bbec] text-white rounded-lg transition"
+        class="mt-auto w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#32504F] hover:bg-[#597877] text-white rounded-lg transition"
         :disabled="!pet.available"
         :class="{ 'opacity-50 cursor-not-allowed': !pet.available }"
         @click="openAdoptionForm"

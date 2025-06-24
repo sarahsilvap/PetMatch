@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-4">
       <h1 class="text-2xl font-bold">Painel de Administração</h1>
       <router-link to="/">
-        <img :src="logo2" alt="Logo Adote Petz" class="h-12 mr-4" />
+        <img :src="logo" alt="Logo Adote Petz" class="h-12 mr-4" />
       </router-link>
     </div>
 
@@ -56,7 +56,7 @@ import CardPetAdm from "../components/CardPetAdm.vue";
 import ModalAddEditPet from "../components/ModalAddEditPet.vue";
 import type { Pet } from "../models/pet";
 import { computed } from "vue";
-import logo2 from "../assets/logo2.png";
+import logo from "../assets/logo.png";
 
 const filteredPets = computed(() =>
   pets.value.filter((pet) =>

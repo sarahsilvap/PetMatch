@@ -1,14 +1,19 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router';
+<script setup>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+const hideLayout = ['/login', '/cadastro']
 </script>
 
 <template>
-  <section class="min-h-screen w-full">
-    <RouterView />
-  </section>
+  <Header v-if="!hideLayout.includes(route.path)" />
+  <main>
+    <router-view />
+  </main>
+  <Footer v-if="!hideLayout.includes(route.path)" />
 </template>
 
-<style scoped>
-
+<style>
 </style>
