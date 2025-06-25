@@ -26,8 +26,12 @@ export default {
         // Exemplo: salva token no localStorage (ajuste conforme seu fluxo)
         localStorage.setItem('token', response.data.token);
 
+        // Decodifica o payload do JWT para pegar o 'role'
+        const payload = JSON.parse(atob(response.data.token.split('.')[1]));
+        localStorage.setItem('role', payload.role); // 👉 exemplo: "admin"
+
         // Redireciona para outra página após login, ex:
-        this.$router.push('/');
+        this.$router.push('/adm');
       } catch (error) {
         console.error("Erro no login:", error);
         this.errorMessage = error.response?.data?.error || 'Erro ao tentar logar.';
@@ -56,7 +60,8 @@ export default {
           <label for="password">Senha</label>
           <input type="password" id="password" v-model="password" placeholder="Digite sua senha" required />
         </div>
-        <button type="submit" class="auth-button" :disabled="isLoading">{{ isLoading ? 'Entrando...' : 'Entrar' }}</button>
+        <button type="submit" class="auth-button" :disabled="isLoading">{{ isLoading ? 'Entrando...' : 'Entrar'
+          }}</button>
       </form>
       <p class="auth-link">
         Não tem uma conta? <router-link to="/cadastro">Cadastre-se</router-link>

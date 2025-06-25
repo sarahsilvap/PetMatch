@@ -46,4 +46,19 @@ const router = createRouter({
   ],
 });
 
+// Proteção da rota /adm
+router.beforeEach((to, from, next) => {
+  if (to.path === "/adm") {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token || role !== "admin") {
+      // Se não tem token ou não é admin, redireciona para login ou home
+      return next("/login"); // ou next('/') se preferir redirecionar para home
+    }
+  }
+
+  next();
+});
+
 export default router;

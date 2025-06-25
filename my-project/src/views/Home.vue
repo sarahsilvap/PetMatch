@@ -146,8 +146,8 @@ const availablePets = computed(() => {
             <PetCard v-for="pet in availablePets" :key="pet.id" :pet="pet" />
           </div>
           <div v-else class="no-pets">
-            <p>No momento, todos os nossos pets encontraram lares temporários.</p>
-            <p>Volte em breve para conhecer nossos novos resgatados!</p>
+            <p>No momento, todos os nossos pets precisam de lares!</p>
+            <p>Confira os Pets que precisam da sua ajuda, seja para lar definitivo ou temporário!</p>
           </div>
           <div class="center-button">
             <router-link to="/adotar" class="btn btn-primary">Ver animais disponíveis!</router-link>
