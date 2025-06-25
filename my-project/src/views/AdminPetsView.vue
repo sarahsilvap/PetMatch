@@ -14,13 +14,18 @@
           </router-link>
         </div>
 
-        <!-- Lado direito: título -->
+        <!-- Centro -->
         <h2 class="text-xl font-bold text-white hidden sm:block">
           Painel Administrativo
         </h2>
+
+        <!-- Lado direito: Botão Logout -->
+        <button @click="logout"
+          class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow transition-all duration-200">
+          Sair
+        </button>
       </div>
     </header>
-
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-6">
@@ -45,10 +50,12 @@
 
       <!-- Pets Grid -->
       <section>
-        <header class="sticky top-0 z-10">
+        <header>
           <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-4">
-              <h1 class="text-2xl font-bold text-[#364648]">Pets cadastrados</h1>
+              <h1 class="text-2xl font-bold text-[#364648]">
+                Pets cadastrados
+              </h1>
             </div>
             <div class="flex items-center space-x-4">
               <button @click="openAddModal"
@@ -67,8 +74,12 @@
         <div v-if="!pets.length" class="bg-white rounded-xl shadow-sm p-8 text-center">
           <div class="max-w-md mx-auto">
             <PawPrintIcon class="h-16 w-16 mx-auto text-[#364648]/30" />
-            <h4 class="mt-4 text-lg font-medium text-[#364648]">Nenhum pet cadastrado</h4>
-            <p class="mt-2 text-gray-500">Comece adicionando seu primeiro pet para adoção.</p>
+            <h4 class="mt-4 text-lg font-medium text-[#364648]">
+              Nenhum pet cadastrado
+            </h4>
+            <p class="mt-2 text-gray-500">
+              Comece adicionando seu primeiro pet para adoção.
+            </p>
             <button @click="openAddModal"
               class="mt-6 inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#fbbb17] hover:bg-[#e6a915] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fbbb17] transition-all duration-300">
               <PlusIcon class="-ml-1 mr-2 h-5 w-5" />
@@ -103,18 +114,39 @@ import CardPetAdm from "../components/CardPetAdm.vue";
 import ModalAddEditPet from "../components/ModalAddEditPet.vue";
 import type { Pet } from "../models/pet";
 import { computed } from "vue";
-import logo2 from "../assets/logo2.png";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  router.push("/");
+};
 
 // Icons (substitua pelos seus componentes de ícone reais)
-const PlusIcon = { template: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>' };
-const SearchIcon = { template: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>' };
-const RefreshIcon = { template: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" /></svg>' };
-const PawPrintIcon = { template: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.5 3A2.5 2.5 0 003 5.5v2.879a2.5 2.5 0 00.732 1.767l6.5 6.5a2.5 2.5 0 003.536 0l2.878-2.878a2.5 2.5 0 000-3.536l-6.5-6.5A2.5 2.5 0 008.38 3H5.5zM6 7a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>' };
+const PlusIcon = {
+  template:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>',
+};
+const SearchIcon = {
+  template:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>',
+};
+const RefreshIcon = {
+  template:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" /></svg>',
+};
+const PawPrintIcon = {
+  template:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.5 3A2.5 2.5 0 003 5.5v2.879a2.5 2.5 0 00.732 1.767l6.5 6.5a2.5 2.5 0 003.536 0l2.878-2.878a2.5 2.5 0 000-3.536l-6.5-6.5A2.5 2.5 0 008.38 3H5.5zM6 7a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>',
+};
 
 const filteredPets = computed(() =>
-  pets.value.filter((pet) =>
-    pet.name.toLowerCase().includes(query.value.toLowerCase()) ||
-    (pet.description && pet.description.toLowerCase().includes(query.value.toLowerCase()))
+  pets.value.filter(
+    (pet) =>
+      pet.name.toLowerCase().includes(query.value.toLowerCase()) ||
+      (pet.description &&
+        pet.description.toLowerCase().includes(query.value.toLowerCase()))
   )
 );
 

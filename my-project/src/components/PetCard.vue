@@ -43,18 +43,12 @@ function openAdoptionForm() {
 
 <template>
   <div
-    class="pet-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative flex flex-col"
-  >
+    class="pet-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative flex flex-col">
     <div class="relative">
-      <img
-        class="w-full h-62 object-cover"
-        :src="
-          pet.coverImage
-            ? `http://localhost:3000${pet.coverImage}`
-            : 'https://arktus.com.br/images/image-404.png'
-        "
-        :alt="pet.name"
-      />
+      <img class="w-full h-62 object-cover" :src="pet.coverImage
+          ? `http://localhost:3000${pet.coverImage}`
+          : 'https://arktus.com.br/images/image-404.png'
+        " :alt="pet.name" />
     </div>
 
     <div class="p-4 flex flex-col flex-grow">
@@ -63,14 +57,10 @@ function openAdoptionForm() {
           <h3 class="text-xl font-bold text-gray-800">
             {{ pet.name || "Nome não disponível" }}
           </h3>
-          <span
-            class="px-2 py-1 text-xs font-semibold rounded-full"
-            :class="
-              getPetTypeDisplay(pet.type) === 'Cachorro'
-                ? 'bg-blue-100 text-blue-800'
-                : 'bg-purple-100 text-purple-800'
-            "
-          >
+          <span class="px-2 py-1 text-xs font-semibold rounded-full" :class="getPetTypeDisplay(pet.type) === 'Cachorro'
+              ? 'bg-blue-100 text-blue-800'
+              : 'bg-purple-100 text-purple-800'
+            ">
             {{ getPetTypeDisplay(pet.type) }}
           </span>
         </div>
@@ -91,21 +81,15 @@ function openAdoptionForm() {
         </div>
 
         <div class="relative">
-          <p
-            class="text-gray-600 mb-4"
-            :class="{ 'line-clamp-2': !isExpanded }"
-          >
+          <p class="text-gray-600 mb-4" :class="{ 'line-clamp-2': !isExpanded }">
             {{
               pet.description
                 ? pet.description
                 : "Este pet está procurando um lar amoroso!"
             }}
           </p>
-          <button
-            v-if="pet.description && pet.description.length > 100"
-            @click="isExpanded = !isExpanded"
-            class="text-[#2d74be] text-sm font-medium hover:underline focus:outline-none"
-          >
+          <button v-if="pet.description && pet.description.length > 100" @click="isExpanded = !isExpanded"
+            class="text-[#2d74be] text-sm font-medium hover:underline focus:outline-none">
             {{ isExpanded ? "Ver menos" : "Ver mais" }}
           </button>
         </div>
@@ -113,26 +97,20 @@ function openAdoptionForm() {
 
       <button
         class="mt-auto w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#32504F] hover:bg-[#597877] text-white rounded-lg transition"
-        :disabled="!pet.available"
-        :class="{ 'opacity-50 cursor-not-allowed': !pet.available }"
-        @click="openAdoptionForm"
-      >
-        {{ pet.available ? "Quero adotar" : "Adotado!" }}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M14 5l7 7m0 0l-7 7m7-7H3"
-          />
-        </svg>
+        :disabled="!pet.available" :class="{ 'opacity-50 cursor-not-allowed': !pet.available }"
+        @click="openAdoptionForm">
+        <template v-if="pet.available">
+          Quero adotar
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block ml-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </template>
+        <template v-else>
+          Adotado!
+        </template>
       </button>
+
     </div>
   </div>
 </template>
@@ -140,7 +118,7 @@ function openAdoptionForm() {
 <style scoped>
 .pet-card {
   transition: transform 0.2s ease;
-  min-height: 500px; 
+  min-height: 500px;
 }
 
 .pet-card:hover {

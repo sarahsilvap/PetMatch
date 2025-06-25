@@ -23,14 +23,20 @@ export default {
           password: this.password
         });
 
-        // Exemplo: salva token no localStorage (ajuste conforme seu fluxo)
-        localStorage.setItem('token', response.data.token);
+        const token = response.data.token;
+        const payload = JSON.parse(atob(token.split('.')[1]));
 
-        // Decodifica o payload do JWT para pegar o 'role'
-        const payload = JSON.parse(atob(response.data.token.split('.')[1]));
-        localStorage.setItem('role', payload.role); // 👉 exemplo: "admin"
+        if (payload.role !== 'admin') {
+          this.errorMessage = "Senha incorreta de administrador.";
+          this.isLoading = false;
+          return; // impede o redirecionamento
+        }
 
-        // Redireciona para outra página após login, ex:
+        // Salva token e role no localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', payload.role);
+
+        // Redireciona para o painel
         this.$router.push('/adm');
       } catch (error) {
         console.error("Erro no login:", error);
@@ -42,6 +48,7 @@ export default {
   },
 };
 </script>
+
 
 <template>
   <div class="auth-container">
@@ -63,9 +70,11 @@ export default {
         <button type="submit" class="auth-button" :disabled="isLoading">{{ isLoading ? 'Entrando...' : 'Entrar'
           }}</button>
       </form>
-      <p class="auth-link">
-        Não tem uma conta? <router-link to="/cadastro">Cadastre-se</router-link>
-      </p>
+      <!--
+        <p class="auth-link">
+          Não tem uma conta? <router-link to="/cadastro">Cadastre-se</router-link>
+        </p>
+      -->
       <p class="home-link">
         <router-link to="/">
           ← Voltar à página inicial
