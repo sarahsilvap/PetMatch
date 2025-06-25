@@ -9,6 +9,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const fileInput = ref<HTMLInputElement | null>(null);
+const showModal = ref(true);
 
 const emit = defineEmits<{
   (e: "close"): void;
@@ -196,15 +197,16 @@ const resetFileInput = () => {
 
 <template>
   <div
-    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
+    class="fixed inset-0 bg-[#364648]/80 backdrop-blur-sm flex justify-center items-center z-50 p-4 transition-opacity duration-300"
   >
     <div
-      class="bg-white rounded-xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-xl"
+      class="bg-white rounded-xl w-full max-w-[650px] max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all duration-300"
+      :class="showModal ? 'scale-100 opacity-100' : 'scale-95 opacity-0'"
     >
-      <div class="p-6">
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-gray-800">
+      <!-- Header -->
+      <div class="bg-[#364648] text-white p-5 rounded-t-xl">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold">
             {{ mode === "add" ? "Adicionar Novo Pet" : "Editar Pet" }}
           </h2>
           <button
@@ -212,7 +214,7 @@ const resetFileInput = () => {
               $emit('close');
               resetForm();
             "
-            class="text-gray-500 hover:text-gray-700 transition-colors"
+            class="text-white hover:text-[#fbbb17] transition-colors"
             aria-label="Fechar modal"
           >
             <svg
@@ -231,11 +233,13 @@ const resetFileInput = () => {
             </svg>
           </button>
         </div>
+      </div>
 
+      <div class="p-6">
         <!-- Error message -->
         <div
           v-if="errorMessage"
-          class="mb-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm flex items-start"
+          class="mb-5 p-3 bg-red-50 border-l-4 border-red-500 text-red-600 rounded-r-lg text-sm flex items-start"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -255,14 +259,14 @@ const resetFileInput = () => {
         <form @submit.prevent="handleSubmit" class="space-y-5">
           <!-- Name -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1.5"
+            <label class="block text-sm font-medium text-[#364648] mb-1.5"
               >Nome *</label
             >
             <input
               v-model.trim="form.name"
               required
               placeholder="Digite o nome do pet"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
+              class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#fbbb17]/50 focus:border-[#fbbb17] transition-all"
             />
           </div>
 
@@ -270,13 +274,13 @@ const resetFileInput = () => {
           <div class="grid grid-cols-2 gap-4">
             <!-- Type -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1.5"
+              <label class="block text-sm font-medium text-[#364648] mb-1.5"
                 >Tipo *</label
               >
               <select
                 v-model="form.type"
                 required
-                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9Ii82Yjc1OGQyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iNiA5IDEyIDE1IDE4IDkiPjwvcG9seWxpbmU+PC9zdmc+')] bg-no-repeat bg-[center_right_1rem]"
+                class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#fbbb17]/50 focus:border-[#fbbb17] transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0MDQxNDMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[center_right_1rem]"
               >
                 <option :value="undefined" disabled selected>
                   Selecione...
@@ -288,13 +292,13 @@ const resetFileInput = () => {
 
             <!-- Size -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1.5"
+              <label class="block text-sm font-medium text-[#364648] mb-1.5"
                 >Tamanho *</label
               >
               <select
                 v-model="form.size"
                 required
-                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9Ii82Yjc1OGQyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iNiA5IDEyIDE1IDE4IDkiPjwvcG9seWxpbmU+PC9zdmc+')] bg-no-repeat bg-[center_right_1rem]"
+                class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#fbbb17]/50 focus:border-[#fbbb17] transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0MDQxNDMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[center_right_1rem]"
               >
                 <option :value="undefined" disabled selected>
                   Selecione...
@@ -308,7 +312,7 @@ const resetFileInput = () => {
 
           <!-- Age -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1.5"
+            <label class="block text-sm font-medium text-[#364648] mb-1.5"
               >Idade *</label
             >
             <input
@@ -318,7 +322,7 @@ const resetFileInput = () => {
               max="30"
               required
               placeholder="Idade em anos"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
+              class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#fbbb17]/50 focus:border-[#fbbb17] transition-all"
             />
           </div>
 
@@ -330,9 +334,9 @@ const resetFileInput = () => {
                 v-model="form.castrated"
                 type="checkbox"
                 id="castrated"
-                class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-200"
+                class="h-4 w-4 text-[#fbbb17] border-gray-300 rounded focus:ring-[#fbbb17]/50"
               />
-              <label for="castrated" class="ml-2 block text-sm text-gray-700"
+              <label for="castrated" class="ml-2 block text-sm text-[#364648]"
                 >Castrado</label
               >
             </div>
@@ -343,9 +347,9 @@ const resetFileInput = () => {
                 v-model="form.available"
                 type="checkbox"
                 id="available"
-                class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-200"
+                class="h-4 w-4 text-[#fbbb17] border-gray-300 rounded focus:ring-[#fbbb17]/50"
               />
-              <label for="available" class="ml-2 block text-sm text-gray-700"
+              <label for="available" class="ml-2 block text-sm text-[#364648]"
                 >Disponível</label
               >
             </div>
@@ -353,20 +357,20 @@ const resetFileInput = () => {
 
           <!-- Description -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1.5"
+            <label class="block text-sm font-medium text-[#364648] mb-1.5"
               >Descrição</label
             >
             <textarea
               v-model="form.description"
               rows="3"
               placeholder="Descreva o pet (personalidade, hábitos, etc)"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all"
+              class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#fbbb17]/50 focus:border-[#fbbb17] transition-all"
             ></textarea>
           </div>
 
           <!-- Photo Upload -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+            <label class="block text-sm font-medium text-[#364648] mb-1.5">
               Foto {{ mode === "add" ? "*" : "" }}
               <span class="text-xs text-gray-500 ml-1"
                 >(JPEG/PNG, máximo 5MB)</span
@@ -375,8 +379,8 @@ const resetFileInput = () => {
 
             <div
               @click="fileInputRef!.click()"
-              class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-300 transition-colors"
-              :class="{ 'border-blue-400': form.coverImage }"
+              class="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-[#fbbb17] transition-colors group"
+              :class="{ 'border-[#fbbb17]': form.coverImage }"
             >
               <input
                 :key="fileInputKey"
@@ -390,7 +394,7 @@ const resetFileInput = () => {
               <template v-if="isLoadingImage">
                 <div class="py-8 flex flex-col items-center justify-center">
                   <svg
-                    class="animate-spin h-8 w-8 text-blue-500"
+                    class="animate-spin h-8 w-8 text-[#fbbb17]"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -414,10 +418,10 @@ const resetFileInput = () => {
               </template>
 
               <template v-else>
-                <div v-if="!form.coverImage" class="py-8">
+                <div v-if="!form.coverImage" class="py-8 group-hover:text-[#fbbb17] transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-10 w-10 mx-auto text-gray-400"
+                    class="h-10 w-10 mx-auto text-gray-400 group-hover:text-[#fbbb17] transition-colors"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -429,7 +433,7 @@ const resetFileInput = () => {
                       d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  <p class="mt-1 text-sm text-gray-600">
+                  <p class="mt-1 text-sm text-gray-600 group-hover:text-[#364648] transition-colors">
                     Clique para adicionar uma foto
                   </p>
                 </div>
@@ -444,7 +448,7 @@ const resetFileInput = () => {
                   <button
                     type="button"
                     @click.stop="resetFileInput"
-                    class="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                    class="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors shadow-md"
                     aria-label="Remover foto"
                   >
                     <svg
@@ -468,20 +472,20 @@ const resetFileInput = () => {
           </div>
 
           <!-- Form Footer -->
-          <div class="flex justify-end space-x-3 pt-2">
+          <div class="flex justify-end space-x-3 pt-4">
             <button
               type="button"
               @click="
                 $emit('close');
                 resetForm();
               "
-              class="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              class="px-5 py-2.5 border border-gray-300 rounded-lg text-[#364648] hover:bg-gray-50 transition-colors font-medium"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              class="px-5 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors focus:ring-2 focus:ring-blue-200 focus:outline-none"
+              class="px-5 py-2.5 bg-[#fbbb17] text-[#364648] rounded-lg hover:bg-[#e6a915] transition-colors focus:ring-2 focus:ring-[#fbbb17]/50 focus:outline-none font-medium shadow-md hover:shadow-lg"
             >
               {{ mode === "add" ? "Adicionar Pet" : "Salvar Alterações" }}
             </button>

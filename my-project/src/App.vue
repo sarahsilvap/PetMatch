@@ -4,7 +4,7 @@ import Footer from './components/Footer.vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const hideLayout = ['/login', '/cadastro']
+const hideLayout = ['/login', '/cadastro', '/adm']
 </script>
 
 <template>

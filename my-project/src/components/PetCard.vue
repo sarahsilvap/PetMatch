@@ -6,21 +6,6 @@ import { computed, nextTick } from "vue";
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const openAdoptionForm = () => {
-  const isLoggedIn = !!localStorage.getItem('token');
-
-  if (!props.pet.available) return;
-
-  if (isLoggedIn) {
-    window.open(
-      "https://docs.google.com/forms/d/e/1FAIpQLSfL2wEonTPvQfj7hrZrBFR8tzwU9Hy1mVKi0XZxl5LI5vBfVw/viewform?usp=dialog",
-      "_blank"
-    );
-  } else {
-    router.push("/login");
-  }
-};
-
 const props = defineProps<{
   pet: Pet;
 }>();
@@ -47,6 +32,13 @@ const getPetSizeDisplay = (size: string) => {
 };
 
 const isExpanded = ref(false);
+
+function openAdoptionForm() {
+  window.open(
+    "https://docs.google.com/forms/d/e/1FAIpQLSfL2wEonTPvQfj7hrZrBFR8tzwU9Hy1mVKi0XZxl5LI5vBfVw/viewform?usp=dialog",
+    "_blank"
+  );
+}
 </script>
 
 <template>
@@ -125,7 +117,7 @@ const isExpanded = ref(false);
         :class="{ 'opacity-50 cursor-not-allowed': !pet.available }"
         @click="openAdoptionForm"
       >
-        {{ pet.available ? "Quero adotar" : "Indisponível" }}
+        {{ pet.available ? "Quero adotar" : "Adotado!" }}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-4 w-4"

@@ -9,7 +9,6 @@
         <router-link to="/quem-somos">Quem Somos</router-link>
         <router-link to="/adotar">Adotar</router-link>
         <router-link to="/doar">Doar</router-link>
-        <router-link to="/voluntario">Seja Voluntário</router-link>
       </nav>
     </div>
   </header>
